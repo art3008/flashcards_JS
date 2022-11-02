@@ -5,6 +5,8 @@ const saveCard  = document.getElementById('save_card')
 const question  = document.getElementById('question')
 const answer    = document.getElementById('answer')
 const flashcards = document.getElementById('flashcards')
+let newArr = []
+
 
 addCard.addEventListener('click', () => {
 
@@ -32,15 +34,34 @@ function add(){
     let flashcard = document.createElement('div')
 
     flashcard.className = 'flashcard'
-
-    
     h2_question.innerText = question.value
     h2_answer.innerHTML = answer.value
 
     flashcard.appendChild(h2_question)
+    flashcard.appendChild(h2_answer)
     flashcards.appendChild(flashcard)
     
+    flashcard.addEventListener('click', () => {
+        h2_answer.style.display == 'none' ? h2_answer.style.display = 'block' : h2_answer.style.display = 'none'
+    })
 
+    addLocSto()
+
+}
+
+function addLocSto() {
+    
+    
+
+    let flash = {
+        "question": question.value,
+        "answer": answer.value,
+    }
+
+    newArr.push(flash)
+
+    console.log(newArr);
+    localStorage.setItem('items', JSON.stringify(newArr))
 
 
 }
