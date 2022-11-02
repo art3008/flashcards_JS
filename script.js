@@ -1,30 +1,27 @@
-const addCard   = document.getElementById('add_card')
-const addForm   = document.getElementById('add_form')
-const closeForm = document.getElementById('close_form')
-const saveCard  = document.getElementById('save_card')
-const question  = document.getElementById('question')
-const answer    = document.getElementById('answer')
-const flashcards = document.getElementById('flashcards')
-let newArr = []
+const addCard       = document.getElementById('add_card')
+const addForm       = document.getElementById('add_form')
+const closeForm     = document.getElementById('close_form')
+const saveCard      = document.getElementById('save_card')
+const question      = document.getElementById('question')
+const answer        = document.getElementById('answer')
+const flashcards    = document.getElementById('flashcards')
+let newArr          = []
 
+
+    
+console.log(localStorage.getItem('items'));
 
 addCard.addEventListener('click', () => {
-
     addForm.style.display = 'block'
-
 })
 
 
 closeForm.addEventListener('click', () => {
-
     addForm.style.display = 'none'
-
 })
 
 
 saveCard.addEventListener('click', () => {
-    console.log(`${question.value} --- ${answer.value}`);
-
     add()
 })
 
@@ -51,17 +48,29 @@ function add(){
 
 function addLocSto() {
     
-    
-
     let flash = {
         "question": question.value,
         "answer": answer.value,
     }
 
     newArr.push(flash)
-
-    console.log(newArr);
     localStorage.setItem('items', JSON.stringify(newArr))
 
-
 }
+
+
+// function showList() {
+
+//     let arrList = JSON.parse(localStorage.getItem('items'))
+//     let newEx = ''
+
+//     console.log(arrList.length);
+
+
+//     for(idx of arrList) {
+//         newEx = idx.answer
+//     }
+    
+//     console.log(newEx);
+
+// }
