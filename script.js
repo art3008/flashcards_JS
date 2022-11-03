@@ -5,72 +5,74 @@ const saveCard      = document.getElementById('save_card')
 const question      = document.getElementById('question')
 const answer        = document.getElementById('answer')
 const flashcards    = document.getElementById('flashcards')
-let newArr          = []
+const deleteCards   = document.getElementById('delete_cards')
+let newArr        = localStorage.getItem('items') ? 
+JSON.parse(localStorage.getItem('items')) : []
+
+newArr.forEach(divMaker)
 
 
-    
-console.log(localStorage.getItem('items'));
-
-addCard.addEventListener('click', () => {
-    addForm.style.display = 'block'
-})
-
-
-closeForm.addEventListener('click', () => {
-    addForm.style.display = 'none'
-})
-
-
-saveCard.addEventListener('click', () => {
-    add()
-})
-
-function add(){
+function divMaker(text) {
     let h2_question = document.createElement('h2')
     let h2_answer = document.createElement('h2')
     let flashcard = document.createElement('div')
 
     flashcard.className = 'flashcard'
-    h2_question.innerText = question.value
+    h2_question.innerHTML = question.value
     h2_answer.innerHTML = answer.value
 
     flashcard.appendChild(h2_question)
     flashcard.appendChild(h2_answer)
-    flashcards.appendChild(flashcard)
-    
+
+
+
     flashcard.addEventListener('click', () => {
-        h2_answer.style.display == 'none' ? h2_answer.style.display = 'block' : h2_answer.style.display = 'none'
+        h2_answer.style.display == 'none' ? 
+        h2_answer.style.display = 'block' : h2_answer.style.display = 'none'
     })
 
-    addLocSto()
+
+    h2_question.innerHTML = text.my_question
+    h2_answer.innerHTML = text.my_answer
+    
+
+
+    flashcards.appendChild(flashcard)
 
 }
 
-function addLocSto() {
-    
-    let flash = {
-        "question": question.value,
-        "answer": answer.value,
+
+function showCreateCardForm() {
+    addForm.style.display = 'block'
+}
+
+function hideCreateCardForm() {
+    addForm.style.display = 'none'
+}
+
+function delFlashCards() {
+    localStorage.clear()
+    flashcards.innerHTML = ''
+    newArr = []
+}
+
+
+function createCard() {
+    let flashcard_info = {
+        'my_question': question.value,
+        'my_answer': answer.value,
     }
 
-    newArr.push(flash)
+    newArr.push(flashcard_info)
     localStorage.setItem('items', JSON.stringify(newArr))
+
+    divMaker(newArr[newArr.length - 1])
+    question.value = ''
+    answer.value = ''
 
 }
 
-
-// function showList() {
-
-//     let arrList = JSON.parse(localStorage.getItem('items'))
-//     let newEx = ''
-
-//     console.log(arrList.length);
-
-
-//     for(idx of arrList) {
-//         newEx = idx.answer
-//     }
-    
-//     console.log(newEx);
-
-// }
+addCard.addEventListener('click', showCreateCardForm)
+closeForm.addEventListener('click', hideCreateCardForm)
+saveCard.addEventListener('click', createCard)
+deleteCards.addEventListener('click', delFlashCards)
